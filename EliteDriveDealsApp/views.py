@@ -8,7 +8,9 @@ from .forms import CarForm
 # Create your views here.
 
 def home(request) -> HttpResponse:
-    newest_car: Car = Car.objects.order_by('-posted_on')[0]
+    newest_car: Car = (
+        Car.objects.order_by('-posted_on')[0]
+    )
 
     return render(
         request=request,

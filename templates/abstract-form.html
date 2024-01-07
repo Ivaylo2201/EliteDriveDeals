@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'car-form.css' %}">
+    <script src="https://kit.fontawesome.com/b53851d4fb.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <div class="inner">
+            <img src="{% static 'nissan_gtr.jpg' %}" alt="Nissan GTR-3">
+            <form method="post" action="{% block action %}{% endblock %}">
+                {% csrf_token %}
+                <div class="text">{% block formtext %}{% endblock %}</div>
+                <div class="brand-model">{{ form.brand }}{{ form.model }}</div>
+                <div class="image">{{ form.image }}</div>
+                <div class="manufacture-year-transmission">
+                    {{ form.manufacture_year }}
+                    {{ form.transmission }}
+                </div>
+                <div class="horsepower-mileage">{{ form.horsepower }}{{ form.mileage }}</div>
+                <div class="price-dealer">{{ form.price }}{{ form.dealer }}</div>
+                <button type="submit">
+                    <i class="fa-solid fa-circle-arrow-up"></i>&nbsp; {% block buttontext %}{% endblock %}
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
