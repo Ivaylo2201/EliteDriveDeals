@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="welcome">Welcome To<br>EliteDriveDeals</div>
+        <div class="car">
+            <img class="car-image" src="{{ car.image }}" alt="">
+            <div class="text">Check out the latest listing!</div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
+
+* {
+    font-family: 'Maven Pro', sans-serif;
+}
+
+body {
+    background-color: #080808;
+}
+
+.nav {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #080808;
+}
+
+.nav a {
+    position: relative;
+    margin: 0 25px 0 25px;
+    font-size: 26px;
+    text-decoration: none;
+}
+
+.nav a::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    top: 34px;
+    bottom: 0;
+    left: 0;
+    transition: .3s ease-in-out;
+}
+
+.nav a:hover::before {
+    width: 100%;
+}
+
+.cars-container {
+    margin-top: 25px;
+    margin-left: 40px;
+    width: 95%;
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+a:visited,
+a:link {
+    color: #ffffff;
+}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'cars.css' %}">
+{% endblock %}
+
+{% block content %}
+	{% if not cars %}
+        <p class="no-cars">
+            No cars are currently available, please try again later!
+        </p>
+    {% else %}
+        {% for car in cars %}
+            <div class="car-card">
+                <div class="car-image-container">
+                    <img class="car-image" src="{{ car.image }}" alt="">
+                </div>
+                <div class="car-properties">
+                    <div class="tag">{{ car.transmission }}</div>
+                    <div class="tag">${{ car.price }}</div>
+                    <div class="tag">{{ car.horsepower }} hp</div>
+                </div>
+                <div class="car-brand">
+                    {{ car.brand }} {{ car.model }}
+                </div>
+                <div class="car-details-container">
+                    <a class="car-details" href="{% url 'car-details' id=car.id %}">Details</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+body {
+    overflow: hidden;
+}
+
+.outher-container {
+    width: 100%;
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-container {
+    width: 45%;
+    height: 662px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.car-image-container {
+    width: 100%;
+    height: 440px;
+}
+
+.car-image {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+}
+
+.car-brand-model {
+    width: 100%;
+    height: 40px;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Bebas Neue', sans-serif;
+    background-color: #080808;
+    color: white;
+    padding-top: 5px;
+}
+
+.car-data {
+    width: 100%;
+    height: 200px;
+    display: flex;
+}
+
+.manufacture-year-label,
+.transmission-label,
+.horsepower-label,
+.mileage-label,
+.price-label {
+    padding-left: 8px;
+}
+
+.car-labels,
+.car-properties,
+.dealer-properties,
+.dealer-labels {
+    width: 26%;
+    display: flex;
+    flex-direction: column;
+}
+
+.manufacture-year-label,
+.transmission-label,
+.horsepower-label,
+.mileage-label,
+.price-label,
+.manufacture-year,
+.transmission,
+.horsepower,
+.mileage,
+.price,
+.dealer-name,
+.dealer-location,
+.dealer-phone-number,
+.dealer-date-joined,
+.car-views,
+.dealer-name-label,
+.dealer-location-label,
+.dealer-phone-number-label,
+.dealer-date-joined-label,
+.car-views-label {
+    width: 100%;
+    height: 35px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+}
+
+.manufacture-year,
+.transmission,
+.horsepower,
+.mileage,
+.price,
+.dealer-name,
+.dealer-location,
+.dealer-phone-number,
+.dealer-date-joined,
+.car-views {
+    justify-content: center;
+}
+
+.manufacture-year-label,
+.transmission-label,
+.horsepower-label,
+.mileage-label,
+.price-label,
+.dealer-name-label,
+.dealer-location-label,
+.dealer-phone-number-label,
+.dealer-date-joined-label,
+.car-views-label {
+    font-weight: bold;
+}
