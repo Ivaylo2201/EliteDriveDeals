@@ -39,7 +39,6 @@ body {
     animation: slideUp 1.15s forwards;
     animation-delay: 1.15s;
     transform: translateY(1000px);
-    box-shadow: 0 4px 8px 0 rgba(223, 223, 223, 0.2), 0 6px 20px 0 rgba(227, 227, 227, 0.19);
     border-radius: 15px;
 }
 

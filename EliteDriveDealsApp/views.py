@@ -69,3 +69,40 @@ def add_listing(request) -> HttpResponse | HttpResponseRedirect:
         template_name='add-listing.html',
         context={'form': form}
     )
+
+def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
+    car = Car.objects.get(id=id)
+
+    if request.method == 'GET':
+        car_data = {
+            'brand': car.brand, 'model': car.model, 'image': car.image,
+            'manufacture_year': car.manufacture_year, 'transmission': car.transmission,
+            'horsepower': car.horsepower, 'mileage': car.mileage, 'price': car.price,
+            'dealer': car.dealer
+        }
+
+        return render(
+            request=request,
+            template_name='edit-listing.html',
+            context={
+                'form': CarForm(initial=car_data),
+                'car': car
+            }
+        )
+    else:
+        form = CarForm(request.POST)
+
+        if form.is_valid():
+            car.brand = form.cleaned_data['brand']
+            car.model = form.cleaned_data['model']
+            car.image = form.cleaned_data['image']
+            car.manufacture_year = form.cleaned_data['manufacture_year']
+            car.transmission = form.cleaned_data['transmission']
+            car.horsepower = form.cleaned_data['horsepower']
+            car.mileage = form.cleaned_data['mileage']
+            car.price = form.cleaned_data['price']
+            car.dealer = form.cleaned_data['dealer']
+
+            car.save()
+
+        return redirect(to='home')

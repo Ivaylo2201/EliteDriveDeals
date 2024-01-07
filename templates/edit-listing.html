@@ -10,9 +10,9 @@
     <div class="form-container">
         <div class="inner">
             <img src="{% static 'nissan_gtr.jpg' %}" alt="Nissan GTR-3">
-            <form method="post">
+            <form method="post" action="{% url 'edit-listing' id=car.id %}">
                 {% csrf_token %}
-                <div class="text">Add a Listing</div>
+                <div class="text">Edit a Listing</div>
                 <div class="brand-model">{{ form.brand }}{{ form.model }}</div>
                 <div class="image">{{ form.image }}</div>
                 <div class="manufacture-year-transmission">
