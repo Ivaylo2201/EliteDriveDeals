@@ -6,43 +6,54 @@
 {% endblock %}
 
 {% block content %}
-    <div class="outher-container">
-        <div class="inner-container">
-            <div class="car-image-container">
-                <img class="car-image" src="{{ car.image }}" alt="">
-            </div>
-            <div class="car-brand-model">
-                {{ car.brand }} {{ car.model }}
-            </div>
-            <div class="car-data">
+    <div class="container">
+        <img class="car-image" src="{{ car.image }}" alt="">
+        <div class="data-container">
+            <div class="car-brand-model">{{ car.brand }} {{ car.model }}</div>
+            <div class="car-properties-container">
                 <div class="car-labels">
-                    <div class="manufacture-year-label">Manufacture year:</div>
-                    <div class="transmission-label">Transmission:</div>
-                    <div class="horsepower-label">Horsepower:</div>
-                    <div class="mileage-label">Mileage:</div>
-                    <div class="price-label">Price:</div>
+                    Manufacture year:<br>
+                    Transmission:<br>
+                    Horsepower:<br>
+                    Mileage:<br>
+                    Price:<br>
                 </div>
                 <div class="car-properties">
-                    <div class="manufacture-year">{{ car.manufacture_year }}</div>
-                    <div class="transmission">{{ car.transmission }}</div>
-                    <div class="horsepower">{{ car.horsepower }} hp.</div>
-                    <div class="mileage">{{ car.mileage }} km.</div>
-                    <div class="price">${{ car.price }}</div>
+                    {{ car.manufacture_year }}<br>
+                    {{ car.transmission }}<br>
+                    {{ car.horsepower }} hp.<br>
+                    {{ car.mileage }} km.<br>
+                    ${{ car.price }}<br>
                 </div>
+            </div>
+            <div class="dealer-properties-container">
                 <div class="dealer-labels">
-                    <div class="dealer-name-label">Dealer name:</div>
-                    <div class="dealer-location-label">Location:</div>
-                    <div class="dealer-phone-number-label">Phone number:</div>
-                    <div class="dealer-date-joined-label">Date joined:</div>
-                    <div class="car-views-label">Listing reviews:</div>
+                    Dealer:<br>
+                    Location:<br>
+                    Phone:<br>
+                    Date joined:<br>
                 </div>
                 <div class="dealer-properties">
-                    <div class="dealer-name">{{ car.dealer.name }}</div>
-                    <div class="dealer-location">{{ car.dealer.location }}</div>
-                    <div class="dealer-phone-number">{{ car.dealer.phone_number }}</div>
-                    <div class="dealer-date-joined">{{ car.dealer.date_joined }}</div>
-                    <div class="car-views">{{ car.views }}</div>
+                    {{ car.dealer.name }}<br>
+                    {{ car.dealer.location }}<br>
+                    {{ car.dealer.phone_number }}<br>
+                    {{ car.dealer.date_joined }}<br>
                 </div>
+            </div>
+            <div class="listing-properties-container">
+                <div class="listing-labels">
+                    Posted on:<br>
+                    Reviews:<br>
+                </div>
+                <div class="listing-properties">
+                    {{ car.posted_on }}<br>
+                    {{ car.views }}<br>
+                </div>
+            </div>
+            <div class="edit-listing-button-container">
+                <a class="edit-listing-button" href="{% url 'edit-listing' id=car.id %}">
+                    Edit Listing
+                </a>
             </div>
         </div>
     </div>

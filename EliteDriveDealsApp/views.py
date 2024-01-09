@@ -8,9 +8,7 @@ from .forms import CarForm
 # Create your views here.
 
 def home(request) -> HttpResponse:
-    newest_car: Car = (
-        Car.objects.order_by('-posted_on')[0]
-    )
+    newest_car: Car = Car.objects.order_by('-posted_on')[0]
 
     return render(
         request=request,
@@ -77,10 +75,10 @@ def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
 
     if request.method == 'GET':
         car_data = {
-            'brand': car.brand, 'model': car.model, 'image': car.image,
-            'manufacture_year': car.manufacture_year, 'transmission': car.transmission,
-            'horsepower': car.horsepower, 'mileage': car.mileage, 'price': car.price,
-            'dealer': car.dealer
+            'brand': car.brand, 'model': car.model,
+            'image': car.image, 'manufacture_year': car.manufacture_year,
+            'transmission': car.transmission, 'horsepower': car.horsepower,
+            'mileage': car.mileage, 'price': car.price, 'dealer': car.dealer
         }
 
         return render(
