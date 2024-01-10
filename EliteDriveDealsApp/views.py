@@ -1,6 +1,6 @@
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 
 from .models import Car
 from .forms import CarForm
@@ -8,7 +8,11 @@ from .forms import CarForm
 # Create your views here.
 
 def home(request) -> HttpResponse:
-    newest_car: Car = Car.objects.order_by('-posted_on')[0]
+    newest_car: Car = (
+        Car.objects
+            .filter(is_available=True)
+            .order_by('-posted_on')[0]
+    )
 
     return render(
         request=request,
@@ -17,9 +21,11 @@ def home(request) -> HttpResponse:
     )
 
 def fetch_new_cars(request) -> HttpResponse:
+    criteria = Q(is_available=True) & Q(mileage=0)
+
     cars: QuerySet = (
         Car.objects
-            .filter(mileage=0)
+            .filter(criteria)
             .order_by('id')
     )
 
@@ -30,9 +36,11 @@ def fetch_new_cars(request) -> HttpResponse:
     )
 
 def fetch_used_cars(request) -> HttpResponse:
+    criteria = Q(is_available=True) & Q(mileage__gt=0)
+
     cars: QuerySet = (
         Car.objects
-            .filter(mileage__gt=0)
+            .filter(criteria)
             .order_by('id')
     )
 
@@ -44,7 +52,7 @@ def fetch_used_cars(request) -> HttpResponse:
 
 
 def car_details(request, id: int) -> HttpResponse:
-    car: Car = get_object_or_404(Car, id=id)
+    car: Car = Car.objects.get(id=id)
 
     car.views += 1
     car.save()
@@ -71,7 +79,7 @@ def add_listing(request) -> HttpResponse | HttpResponseRedirect:
     )
 
 def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
-    car = Car.objects.get(id=id)
+    car: Car = Car.objects.get(id=id)
 
     if request.method == 'GET':
         car_data = {
@@ -81,13 +89,12 @@ def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
             'mileage': car.mileage, 'price': car.price, 'dealer': car.dealer
         }
 
+        form = CarForm(initial=car_data)
+
         return render(
             request=request,
             template_name='edit-listing.html',
-            context={
-                'form': CarForm(initial=car_data),
-                'car': car
-            }
+            context={'form': form, 'car': car}
         )
     else:
         form = CarForm(request.POST)
@@ -106,3 +113,10 @@ def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
             car.save()
 
         return redirect(to='home')
+
+def purchase_car(request, id: int) -> HttpResponseRedirect:
+    car: Car = Car.objects.get(id=id)
+    car.is_available = False
+    car.save()
+
+    return redirect(to='home')

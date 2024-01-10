@@ -3,6 +3,7 @@
 
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'car-details.css' %}">
+    <script src="https://kit.fontawesome.com/b53851d4fb.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content %}
@@ -52,7 +53,10 @@
             </div>
             <div class="edit-listing-button-container">
                 <a class="edit-listing-button" href="{% url 'edit-listing' id=car.id %}">
-                    Edit Listing
+                    <i class="fa-solid fa-wrench fa-fw"></i> Edit Listing
+                </a>
+                <a class="purchase-car-button" href="{% url 'purchase-car' id=car.id %}">
+                    <i class="fa-solid fa-cart-shopping fa-fw"></i> Purchase
                 </a>
             </div>
         </div>

@@ -28,6 +28,7 @@ class Car(models.Model):
     dealer = models.ForeignKey(to=Dealer, on_delete=models.CASCADE, related_name='listings')
     views = models.PositiveIntegerField(default=0)
     posted_on = models.DateField(auto_now_add=True)
+    is_available = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return f'{self.brand} {self.model}'
