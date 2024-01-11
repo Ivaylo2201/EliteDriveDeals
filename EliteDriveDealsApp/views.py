@@ -8,16 +8,17 @@ from .forms import CarForm
 # Create your views here.
 
 def home(request) -> HttpResponse:
-    newest_car: Car = (
+    car: Car = (
         Car.objects
             .filter(is_available=True)
-            .order_by('-posted_on')[0]
+            .order_by('-posted_on')
+            .first()
     )
 
     return render(
         request=request,
         template_name='home.html',
-        context={'car': newest_car}
+        context={'car': car}
     )
 
 def fetch_new_cars(request) -> HttpResponse:
@@ -82,12 +83,8 @@ def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
     car: Car = Car.objects.get(id=id)
 
     if request.method == 'GET':
-        car_data = {
-            'brand': car.brand, 'model': car.model,
-            'image': car.image, 'manufacture_year': car.manufacture_year,
-            'transmission': car.transmission, 'horsepower': car.horsepower,
-            'mileage': car.mileage, 'price': car.price, 'dealer': car.dealer
-        }
+        car_data = {k: v for k, v in car.__dict__.items()}
+        car_data['dealer'] = car.dealer
 
         form = CarForm(initial=car_data)
 
@@ -100,15 +97,8 @@ def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
         form = CarForm(request.POST)
 
         if form.is_valid():
-            car.brand = form.cleaned_data['brand']
-            car.model = form.cleaned_data['model']
-            car.image = form.cleaned_data['image']
-            car.manufacture_year = form.cleaned_data['manufacture_year']
-            car.transmission = form.cleaned_data['transmission']
-            car.horsepower = form.cleaned_data['horsepower']
-            car.mileage = form.cleaned_data['mileage']
-            car.price = form.cleaned_data['price']
-            car.dealer = form.cleaned_data['dealer']
+            for field, value in form.cleaned_data.items():
+                setattr(car, field, value)
 
             car.save()
 
@@ -116,6 +106,7 @@ def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
 
 def purchase_car(request, id: int) -> HttpResponseRedirect:
     car: Car = Car.objects.get(id=id)
+
     car.is_available = False
     car.save()
 
