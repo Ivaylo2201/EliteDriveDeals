@@ -9,7 +9,7 @@ from .choices import LOCATIONS, TRANSMISSIONS
 class Dealer(models.Model):
     name = models.CharField(max_length=25)
     location = models.CharField(choices=LOCATIONS)
-    phone_number = models.CharField(validators=[MinLengthValidator(10)])
+    phone_number = models.CharField(max_length=10, validators=[MinLengthValidator(10)])
     date_joined = models.DateField(auto_now_add=True)
 
     def __str__(self) -> str:

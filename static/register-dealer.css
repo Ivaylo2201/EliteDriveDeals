@@ -8,12 +8,13 @@
 }
 
 .inner {
-    height: 550px;
-    width: 700px;
+    height: 600px;
+    width: 800px;
     background-color: #ffffff;
     display: flex;
     align-items: center;
-    margin-top: 75px;
+    margin-top: 50px;
+    overflow: hidden;
 }
 
 .text {
@@ -81,8 +82,9 @@ input::placeholder {
 
 img {
     height: 100%;
+    transition: 0.9s;
 }
 
 form {
-    transform: translateX(25%);
+    transform: translateX(37%);
 }
