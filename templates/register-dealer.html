@@ -9,19 +9,21 @@
 {% block content %}
     <div class="container">
         <div class="inner">
-            <img src="{% static 'dealer.jpg' %}" alt="">
-            <div class="form-container">
-                <form method="post" action="{% url 'register-dealer' %}">
-                    {% csrf_token %}
-                    <div class="text">Register a Dealer</div>
-                    <div>{{ form.name }}</div>
-                    <div>{{ form.location }}</div>
-                    <div>{{ form.phone_number }}</div>
+            <img src="{% static 'cars.jpg' %}" alt="">
+            <form method="post" action="{% url 'register-dealer' %}">
+                {% csrf_token %}
+                <div class="text">Register a Dealer</div>
+                <div class="fields">
+                    <div class="name">{{ form.name }}</div>
+                    <div class="phone-number">{{ form.phone_number }}</div>
+                    <div class="location">{{ form.location }}</div>
+                </div>
+                <div class="button">
                     <button type="submit">
                         <i class="fa-solid fa-user-plus"></i>&nbsp; Register
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

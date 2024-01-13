@@ -53,7 +53,7 @@
     width: 96px;
     border-radius: 20px;
     color: #ffffff;
-    background-color: #000000;
+    background-color: #080808;
     cursor: default;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .car-details {
-    background-color: #000000;
+    background-color: #080808;
     padding: 15px 35px 15px 35px;
     border-radius: 65px;
     text-decoration: none;

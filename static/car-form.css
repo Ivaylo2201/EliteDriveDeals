@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 select,
 input {
     font-size: 22px;
@@ -99,6 +101,7 @@ button:hover {
     text-align: center;
     font-size: 35px;
     margin: 10px 0 10px 0;
+    font-family: 'Bebas Neue', sans-serif;
 }
 
 input[type=number]::-webkit-inner-spin-button,

@@ -1,5 +1,5 @@
 from django.db.models import QuerySet, Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.shortcuts import render, redirect
 
 from .models import Car
@@ -7,7 +7,7 @@ from .forms import CarForm, DealerForm
 
 # Create your views here.
 
-def home(request) -> HttpResponse:
+def home(request: HttpRequest) -> HttpResponse:
     car: Car = (
         Car.objects
             .filter(is_available=True)
@@ -21,7 +21,7 @@ def home(request) -> HttpResponse:
         context={'car': car}
     )
 
-def fetch_new_cars(request) -> HttpResponse:
+def fetch_new_cars(request: HttpRequest) -> HttpResponse:
     criteria = Q(is_available=True) & Q(mileage=0)
 
     cars: QuerySet = (
@@ -36,7 +36,7 @@ def fetch_new_cars(request) -> HttpResponse:
         context={'cars': cars}
     )
 
-def fetch_used_cars(request) -> HttpResponse:
+def fetch_used_cars(request: HttpRequest) -> HttpResponse:
     criteria = Q(is_available=True) & Q(mileage__gt=0)
 
     cars: QuerySet = (
@@ -52,7 +52,7 @@ def fetch_used_cars(request) -> HttpResponse:
     )
 
 
-def car_details(request, id: int) -> HttpResponse:
+def car_details(request: HttpRequest, id: int) -> HttpResponse:
     car: Car = Car.objects.get(id=id)
 
     car.views += 1
@@ -64,7 +64,7 @@ def car_details(request, id: int) -> HttpResponse:
         context={'car': car}
     )
 
-def add_listing(request) -> HttpResponse | HttpResponseRedirect:
+def add_listing(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.method == 'POST':
         form = CarForm(request.POST)
         if form.is_valid():
@@ -79,7 +79,7 @@ def add_listing(request) -> HttpResponse | HttpResponseRedirect:
         context={'form': form}
     )
 
-def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
+def edit_listing(request: HttpRequest, id: int) -> HttpResponse | HttpResponseRedirect:
     car: Car = Car.objects.get(id=id)
 
     if request.method == 'GET':
@@ -104,7 +104,7 @@ def edit_listing(request, id: int) -> HttpResponse | HttpResponseRedirect:
 
         return redirect(to='home')
 
-def purchase_car(request, id: int) -> HttpResponseRedirect:
+def purchase_car(request: HttpRequest, id: int) -> HttpResponseRedirect:
     car: Car = Car.objects.get(id=id)
 
     car.is_available = False
@@ -112,7 +112,7 @@ def purchase_car(request, id: int) -> HttpResponseRedirect:
 
     return redirect(to='home')
 
-def register_dealer(request) -> HttpResponse | HttpResponseRedirect:
+def register_dealer(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.method == 'POST':
         form = DealerForm(request.POST)
         if form.is_valid():
