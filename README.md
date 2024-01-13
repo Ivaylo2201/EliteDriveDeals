@@ -4,7 +4,7 @@ interface decorated with smooth animations.
 Homepage:
 ![home](https://github.com/Ivaylo2201/EliteDriveDeals/assets/120925473/96c575b6-e8f3-40ca-b1ce-03d2b0718f63)
 
-New cars page (cars with mileage = 0):
+New cars page:
 ![new_cars](https://github.com/Ivaylo2201/EliteDriveDeals/assets/120925473/183a084d-299b-4d19-9aec-54503c3bcaa0)
 
 Used cars page:
