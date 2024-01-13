@@ -15,7 +15,7 @@
         <a href="{% url 'new-cars' %}">New Cars</a>
         <a href="{% url 'used-cars' %}">Used Cars</a>
         <a href="{% url 'add-listing' %}">Add a Listing</a>
-        <a href="">Register a Dealer</a>
+        <a href="{% url 'register-dealer' %}">Register a Dealer</a>
     </div>
     <div class="cars-container">
         {% block content %}{% endblock %}

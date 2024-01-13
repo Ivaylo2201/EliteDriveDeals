@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Car
+from .models import Car, Dealer
 
 
 class CarForm(ModelForm):
@@ -24,4 +24,15 @@ class CarForm(ModelForm):
             'horsepower': forms.NumberInput(attrs={'placeholder': 'Horsepower'}),
             'mileage': forms.NumberInput(attrs={'placeholder': 'Mileage'}),
             'price': forms.NumberInput(attrs={'placeholder': 'Price'}),
+        }
+
+
+class DealerForm(ModelForm):
+    class Meta:
+        model = Dealer
+        fields = ['name', 'location', 'phone_number']
+
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Name'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': 'Phone number'})
         }

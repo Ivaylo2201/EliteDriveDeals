@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 from .models import Car
-from .forms import CarForm
+from .forms import CarForm, DealerForm
 
 # Create your views here.
 
@@ -111,3 +111,18 @@ def purchase_car(request, id: int) -> HttpResponseRedirect:
     car.save()
 
     return redirect(to='home')
+
+def register_dealer(request) -> HttpResponse | HttpResponseRedirect:
+    if request.method == 'POST':
+        form = DealerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(to='home')
+    else:
+        form = DealerForm()
+
+    return render(
+        request=request,
+        template_name='register-dealer.html',
+        context={'form': form}
+    )
