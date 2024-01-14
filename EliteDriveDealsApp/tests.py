@@ -1,8 +1,10 @@
+from django.http import HttpResponse
 from django.test import TestCase, Client
 from django.urls import reverse
 
 from .models import Car, Dealer
 from datetime import date
+from typing import Any
 
 
 # Create your tests here.
@@ -19,43 +21,57 @@ class CarTest(TestCase):
             mileage=0,
             price=10000,
             dealer=Dealer.objects.create(name='test_name', location='Sofia', phone_number='0000000000'),
+            posted_on='2024-01-14'
         )
+
 
     def test_car_brand(self):
         self.assertEqual(self.car.brand, 'test_brand')
 
+
     def test_car_model(self):
         self.assertEqual(self.car.model, 'test_model')
+
 
     def test_car_image(self):
         self.assertEqual(self.car.image, 'test_image')
 
+
     def test_car_manufacture_year(self):
         self.assertEqual(self.car.manufacture_year, 2024)
+
 
     def test_car_transmission(self):
         self.assertEqual(self.car.transmission, 'Automatic')
 
+
     def test_car_horsepower(self):
         self.assertEqual(self.car.horsepower, 100)
+
 
     def test_car_mileage(self):
         self.assertEqual(self.car.mileage, 0)
 
+
     def test_car_price(self):
         self.assertEqual(self.car.price, 10000)
+
 
     def test_car_dealer(self):
         self.assertEqual(self.car.dealer.name, 'test_name')
 
+
     def test_car_views_default_value(self):
         self.assertEqual(self.car.views, 0)
 
+
     def test_car_posted_on(self):
-        self.assertEqual(self.car.posted_on, date(2024, 1, 14))
+        self.assertEqual(self.car.posted_on, date.today())
+
 
     def test_car_is_available(self):
         self.assertEqual(self.car.is_available, True)
+
 
     def test_car_str_method(self):
         self.assertEqual(self.car.__str__(), 'test_brand test_model')
@@ -66,20 +82,26 @@ class DealerTest(TestCase):
         self.dealer = Dealer.objects.create(
             name='test_name',
             location='Sofia',
-            phone_number='0000000000'
+            phone_number='0000000000',
+            date_joined='2024-01-14'
         )
+
 
     def test_dealer_name(self) -> None:
         self.assertEqual(self.dealer.name, 'test_name')
 
+
     def test_dealer_location(self) -> None:
         self.assertEqual(self.dealer.location, 'Sofia')
+
 
     def test_dealer_phone_number(self) -> None:
         self.assertEqual(self.dealer.phone_number, '0000000000')
 
+
     def test_dealer_date_joined(self) -> None:
-        self.assertEqual(self.dealer.date_joined, date(2024, 1, 14))
+        self.assertEqual(self.dealer.date_joined, date.today())
+
 
     def test_dealer_str_method(self) -> None:
         self.assertEqual(self.dealer.__str__(), 'test_name')
@@ -101,9 +123,10 @@ class ViewsTest(TestCase):
             dealer=Dealer.objects.create(name='test_name', location='Sofia', phone_number='0000000000'),
         )
 
+
     def test_home_view(self) -> None:
-        url = reverse('home')
-        response = self.client.get(url)
+        url: str = reverse('home')
+        response: HttpResponse = self.client.get(url)
 
         self.assertContains(response, 'Welcome To<br>EliteDriveDeals')
         self.assertContains(response, self.car.image)
@@ -112,11 +135,12 @@ class ViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'home.html')
 
-    def test_new_cars_view(self) -> None:
-        url = reverse('new-cars')
-        response = self.client.get(url)
 
-        attrs: list = [
+    def test_new_cars_view(self) -> None:
+        url: str = reverse('new-cars')
+        response: HttpResponse = self.client.get(url)
+
+        attrs: list[str] = [
             'car-card', self.car.image, self.car.transmission,
             self.car.horsepower, self.car.__str__(), 'Details'
         ]
@@ -127,9 +151,10 @@ class ViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'cars.html')
 
+
     def test_used_cars_view(self) -> None:
-        url = reverse('used-cars')
-        response = self.client.get(url)
+        url: str = reverse('used-cars')
+        response: HttpResponse = self.client.get(url)
 
         # Since this and the above view use the same
         # template the previous test is enough for both views
@@ -137,25 +162,64 @@ class ViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'cars.html')
 
-    def test_add_listing_view(self) -> None:
-        url = reverse('add-listing')
-        response = self.client.get(url)
+
+    def test_add_listing_view_get(self) -> None:
+        url: str = reverse('add-listing')
+        response: HttpResponse = self.client.get(url)
 
         self.assertEqual(response.status_code, 201)
         self.assertTemplateUsed(response, 'add-listing.html')
 
-    def test_register_dealer_view(self) -> None:
-        url = reverse('register-dealer')
-        response = self.client.get(url)
+
+    def test_add_listing_view_post(self) -> None:
+        url: str = reverse('add-listing')
+        data: dict[str, Any] = {
+            'brand': 'test_brand', 'model': 'test_model',
+            'image': 'https://content.api.news/v3/images/bin/bad661b374f7730fbbd29dc9b2f6ea3f',
+            'manufacture_year': 2015, 'transmission': 'Automatic',
+            'horsepower': 150, 'mileage': 200000, 'price': 20000,
+            'dealer': self.car.dealer
+        }
+        response: HttpResponse = self.client.post(url, data=data)
+
+        is_added: bool = (
+            Car.objects
+                .filter(brand='test_brand', model='test_model')
+                .exists()
+        )
+
+        self.assertTrue(is_added)
+        self.assertEqual(response.status_code, 201)
+
+
+    def test_register_dealer_view_get(self) -> None:
+        url: str = reverse('register-dealer')
+        response: HttpResponse = self.client.get(url)
 
         self.assertEqual(response.status_code, 201)
         self.assertTemplateUsed(response, 'register-dealer.html')
 
+
+    def test_register_dealer_view_post(self) -> None:
+        url: str = reverse('register-dealer')
+        data: dict[str, str] = {'name': 'test_name', 'location': 'Varna', 'phone_number': '0000000000'}
+        response: HttpResponse = self.client.post(url, data)
+
+        is_registered: bool = (
+            Dealer.objects
+                .filter(name='test_name', location='Varna', phone_number='0000000000')
+                .exists()
+        )
+
+        self.assertTrue(is_registered)
+        self.assertEqual(response.status_code, 302)
+
+
     def test_car_details_view(self) -> None:
         url: str = '/car-details/1'
-        response = self.client.get(url)
+        response: HttpResponse = self.client.get(url)
 
-        fields: list = [
+        fields: list[str] = [
             'brand', 'model', 'manufacture_year', 'transmission',
             'horsepower', 'mileage', 'price', 'views',
         ]
@@ -163,7 +227,8 @@ class ViewsTest(TestCase):
         for f in fields:
             self.assertContains(response, getattr(self.car, f))
 
-        self.assertContains(response, 'Jan. 14, 2024')
+        # Converting to Django date format
+        self.assertContains(response, date.today().strftime('%b. %d, %Y'))
         self.assertContains(response, self.car.dealer.name)
         self.assertContains(response, self.car.dealer.location)
         self.assertContains(response, self.car.dealer.phone_number)
@@ -171,9 +236,10 @@ class ViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'car-details.html')
 
+
     def test_car_purchased_view(self) -> None:
         url: str = '/purchase-car/1'
-        response = self.client.get(url)
+        response: HttpResponse = self.client.get(url)
 
-        self.assertEqual(response.status_code, 302)  # Redirect -> No render template is used
+        self.assertEqual(response.status_code, 302)
         self.assertFalse(Car.objects.get(id=1).is_available)
