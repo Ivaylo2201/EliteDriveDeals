@@ -10,13 +10,13 @@ class CarForm(ModelForm):
 
     class Meta:
         model = Car
-        fields = [
+        fields: list = [
             'brand', 'model', 'image',
             'manufacture_year', 'transmission',
             'horsepower', 'mileage', 'price', 'dealer'
         ]
 
-        widgets = {
+        widgets: dict = {
             'brand': forms.TextInput(attrs={'placeholder': 'Brand'}),
             'model': forms.TextInput(attrs={'placeholder': 'Model'}),
             'image': forms.TextInput(attrs={'placeholder': 'Image URL'}),
@@ -30,9 +30,9 @@ class CarForm(ModelForm):
 class DealerForm(ModelForm):
     class Meta:
         model = Dealer
-        fields = ['name', 'location', 'phone_number']
+        fields: list = ['name', 'location', 'phone_number']
 
-        widgets = {
+        widgets: dict = {
             'name': forms.TextInput(attrs={'placeholder': 'Name'}),
             'phone_number': forms.TextInput(attrs={'placeholder': 'Phone number'})
         }

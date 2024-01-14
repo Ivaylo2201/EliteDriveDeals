@@ -15,6 +15,7 @@ class CarAdmin(admin.ModelAdmin):
     search_fields = ['brand', 'model']
     readonly_fields = ['views', 'posted_on', 'is_available']
 
+
 @admin.register(Dealer)
 class DealerAdmin(admin.ModelAdmin):
     list_display = ['name', 'location', 'phone_number', 'date_joined']

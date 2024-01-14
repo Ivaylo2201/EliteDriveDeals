@@ -18,7 +18,8 @@ def home(request: HttpRequest) -> HttpResponse:
     return render(
         request=request,
         template_name='home.html',
-        context={'car': car}
+        context={'car': car},
+        status=200
     )
 
 def fetch_new_cars(request: HttpRequest) -> HttpResponse:
@@ -33,7 +34,8 @@ def fetch_new_cars(request: HttpRequest) -> HttpResponse:
     return render(
         request=request,
         template_name='cars.html',
-        context={'cars': cars}
+        context={'cars': cars},
+        status=200
     )
 
 def fetch_used_cars(request: HttpRequest) -> HttpResponse:
@@ -48,7 +50,8 @@ def fetch_used_cars(request: HttpRequest) -> HttpResponse:
     return render(
         request=request,
         template_name='cars.html',
-        context={'cars': cars}
+        context={'cars': cars},
+        status=200
     )
 
 
@@ -61,10 +64,11 @@ def car_details(request: HttpRequest, id: int) -> HttpResponse:
     return render(
         request=request,
         template_name='car-details.html',
-        context={'car': car}
+        context={'car': car},
+        status=200
     )
 
-def add_listing(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
+def add_listing(request: HttpRequest) -> HttpResponse or HttpResponseRedirect:
     if request.method == 'POST':
         form = CarForm(request.POST)
         if form.is_valid():
@@ -76,11 +80,12 @@ def add_listing(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     return render(
         request=request,
         template_name='add-listing.html',
-        context={'form': form}
+        context={'form': form},
+        status=201
     )
 
-def edit_listing(request: HttpRequest, id: int) -> HttpResponse | HttpResponseRedirect:
-    car: Car = Car.objects.get(id=id)
+def edit_listing(request: HttpRequest, id: int) -> HttpResponse or HttpResponseRedirect:
+    car: Car = Car.objects.get(pk=id)
 
     if request.method == 'GET':
         car_data = {k: v for k, v in car.__dict__.items()}
@@ -91,7 +96,8 @@ def edit_listing(request: HttpRequest, id: int) -> HttpResponse | HttpResponseRe
         return render(
             request=request,
             template_name='edit-listing.html',
-            context={'form': form, 'car': car}
+            context={'form': form, 'car': car},
+            status=200
         )
     else:
         form = CarForm(request.POST)
@@ -112,7 +118,7 @@ def purchase_car(request: HttpRequest, id: int) -> HttpResponseRedirect:
 
     return redirect(to='home')
 
-def register_dealer(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
+def register_dealer(request: HttpRequest) -> HttpResponse or HttpResponseRedirect:
     if request.method == 'POST':
         form = DealerForm(request.POST)
         if form.is_valid():
@@ -124,5 +130,6 @@ def register_dealer(request: HttpRequest) -> HttpResponse | HttpResponseRedirect
     return render(
         request=request,
         template_name='register-dealer.html',
-        context={'form': form}
+        context={'form': form},
+        status=201
     )
