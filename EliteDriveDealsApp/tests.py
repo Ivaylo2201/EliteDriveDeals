@@ -21,7 +21,6 @@ class CarTest(TestCase):
             mileage=0,
             price=10000,
             dealer=Dealer.objects.create(name='test_name', location='Sofia', phone_number='0000000000'),
-            posted_on='2024-01-14'
         )
 
 
@@ -83,7 +82,6 @@ class DealerTest(TestCase):
             name='test_name',
             location='Sofia',
             phone_number='0000000000',
-            date_joined='2024-01-14'
         )
 
 
