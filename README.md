@@ -17,4 +17,4 @@ Add a listing form page:
 ![car_form](https://github.com/Ivaylo2201/EliteDriveDeals/assets/120925473/845d642d-b2df-4f64-8bfc-1f7c77e08b99)
 
 Register a dealer form page:
-![dealer_form](https://github.com/Ivaylo2201/EliteDriveDeals/assets/120925473/6f95fca2-823a-445a-a066-6b45fc84d49d)
+![dealer_form](https://github.com/Ivaylo2201/EliteDriveDeals/assets/120925473/844da4c3-38d2-443e-a05c-c10d771bb5d6)
