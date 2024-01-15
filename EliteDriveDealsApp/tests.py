@@ -11,7 +11,7 @@ from typing import Any
 
 class CarTest(TestCase):
     def setUp(self):
-        self.car = Car.objects.create(
+        self.car: Car = Car.objects.create(
             brand='test_brand',
             model='test_model',
             image='test_image',
@@ -21,7 +21,6 @@ class CarTest(TestCase):
             mileage=0,
             price=10000,
             dealer=Dealer.objects.create(name='test_name', location='Sofia', phone_number='0000000000'),
-            posted_on='2024-01-14'
         )
 
 
@@ -79,12 +78,7 @@ class CarTest(TestCase):
 
 class DealerTest(TestCase):
     def setUp(self) -> None:
-        self.dealer = Dealer.objects.create(
-            name='test_name',
-            location='Sofia',
-            phone_number='0000000000',
-            date_joined='2024-01-14'
-        )
+        self.dealer: Dealer = Dealer.objects.create(name='test_name', location='Sofia', phone_number='0000000000')
 
 
     def test_dealer_name(self) -> None:
@@ -109,8 +103,8 @@ class DealerTest(TestCase):
 
 class ViewsTest(TestCase):
     def setUp(self) -> None:
-        self.client = Client()
-        self.car = Car.objects.create(
+        self.client: Client = Client()
+        self.car: Car = Car.objects.create(
             id=1,
             brand='test_brand',
             model='test_model',
@@ -184,8 +178,8 @@ class ViewsTest(TestCase):
 
         is_added: bool = (
             Car.objects
-                .filter(brand='test_brand', model='test_model')
-                .exists()
+            .filter(brand='test_brand', model='test_model')
+            .exists()
         )
 
         self.assertTrue(is_added)
@@ -207,8 +201,8 @@ class ViewsTest(TestCase):
 
         is_registered: bool = (
             Dealer.objects
-                .filter(name='test_name', location='Varna', phone_number='0000000000')
-                .exists()
+            .filter(name='test_name', location='Varna', phone_number='0000000000')
+            .exists()
         )
 
         self.assertTrue(is_registered)
