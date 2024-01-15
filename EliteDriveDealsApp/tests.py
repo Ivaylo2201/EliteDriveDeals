@@ -78,7 +78,15 @@ class CarTest(TestCase):
 
 class DealerTest(TestCase):
     def setUp(self) -> None:
+<<<<<<< HEAD
         self.dealer: Dealer = Dealer.objects.create(name='test_name', location='Sofia', phone_number='0000000000')
+=======
+        self.dealer = Dealer.objects.create(
+            name='test_name',
+            location='Sofia',
+            phone_number='0000000000',
+        )
+>>>>>>> c2dff65c4dce5b16543fa2b5d4c06376b2251cb6
 
 
     def test_dealer_name(self) -> None:
