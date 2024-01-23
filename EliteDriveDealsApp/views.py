@@ -100,10 +100,10 @@ def edit_listing(request: HttpRequest, id: int) -> HttpResponse or HttpResponseR
             status=200
         )
     else:
-        form = CarForm(request.POST)
+        form = CarForm(request.POST)  # instance=car - better way
 
         if form.is_valid():
-            for field, value in form.cleaned_data.items():
+            for field, value in form.cleaned_data.items():  # form.save() instead of the loop
                 setattr(car, field, value)
 
             car.save()
